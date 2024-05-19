@@ -34,6 +34,7 @@
 #include "Mario.h"
 #include "Brick.h"
 #include "Goomba.h"
+#include "Dragon.h"
 #include "Coin.h"
 #include "Platform.h"
 
@@ -307,6 +308,31 @@ void LoadAssetsGoomba()
 	animations->Add(ID_ANI_GOOMBA_DIE, ani);
 
 }
+
+void LoadAssetsDragon()
+{
+	CTextures* textures = CTextures::GetInstance();
+	CSprites* sprites = CSprites::GetInstance();
+	CAnimations* animations = CAnimations::GetInstance();
+
+	LPTEXTURE texEnemy = textures->Get(ID_TEX_ENEMY);
+
+	sprites->Add(ID_SPRITE_DRAGON_WALK + 1, 4, 13, 22, 30, texEnemy);
+	sprites->Add(ID_SPRITE_DRAGON_WALK + 2, 24, 13, 42, 30, texEnemy);
+
+	sprites->Add(ID_SPRITE_DRAGON_DIE + 1, 44, 19, 62, 30, texEnemy);
+
+	LPANIMATION ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_DRAGON_WALK + 1);
+	ani->Add(ID_SPRITE_DRAGON_WALK + 2);
+	animations->Add(ID_ANI_DRAGON_WALKING, ani);
+
+	ani = new CAnimation(100);
+	ani->Add(ID_SPRITE_DRAGON_DIE + 1);
+	animations->Add(ID_ANI_DRAGON_DIE, ani);
+
+}
+
 void LoadAssetsBrick()
 {
 	CTextures* textures = CTextures::GetInstance();
@@ -368,6 +394,7 @@ void LoadResources()
 
 	LoadAssetsMario();
 	LoadAssetsGoomba();
+	LoadAssetsDragon();
 	LoadAssetsBrick();
 	LoadAssetsCoin();
 	LoadAssetsOther();
@@ -388,6 +415,7 @@ void ClearScene()
 
 #define BRICK_X 0.0f
 #define GOOMBA_X 200.0f
+#define DRAGON_X 200.0f
 #define COIN_X 100.0f
 
 #define BRICK_Y GROUND_Y + 20.0f
@@ -456,6 +484,9 @@ void Reload()
 		CGoomba* goomba = new CGoomba(GOOMBA_X + j * 60, GROUND_Y - 120.0f);
 		objects.push_back(goomba);
 	}
+	// DRAGON	
+		CDragon* d = new CDragon(DRAGON_X + 1 * 60, GROUND_Y - 20.0f);
+		objects.push_back(d);
 
 	// COINS 
 	for (int i = 0; i < 10; i++)
